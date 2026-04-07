@@ -1,0 +1,163 @@
+/* ---- Todo item ---- */
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: transparent;
+  cursor: grab;
+  transition: background 0.12s;
+  position: relative;
+  user-select: none;
+}
+
+.todo-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.app--dark .todo-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.todo-item--dragging {
+  opacity: 0.35;
+  cursor: grabbing;
+}
+
+.todo-item--dragover {
+  outline: 2px dashed #1a2744;
+  outline-offset: -2px;
+  background: rgba(26, 39, 68, 0.08);
+}
+
+.app--dark .todo-item--dragover {
+  outline-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- Status dot ---- */
+
+.todo-item__status-dot {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+}
+
+.todo-item__status-dot--todo {
+  background: transparent;
+  color: #b2bec3;
+}
+
+.todo-item__status-dot--in_progress {
+  background: #74b9ff;
+  border-color: #74b9ff;
+}
+
+.todo-item__status-dot--completed {
+  background: #00b894;
+  border-color: #00b894;
+}
+
+/* ---- Title ---- */
+
+.todo-item__title {
+  flex: 1;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.todo-item--completed .todo-item__title {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
+
+/* ---- Action buttons (hidden until hover) ---- */
+
+.todo-item__actions {
+  display: none;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.todo-item:hover .todo-item__actions {
+  display: flex;
+}
+
+.todo-item__action-btn {
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  background: transparent;
+  white-space: nowrap;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.todo-item__action-btn--todo {
+  color: #636e72;
+  border-color: #b2bec3;
+}
+.todo-item__action-btn--todo:hover {
+  background: #f0f0f0;
+}
+
+.todo-item__action-btn--in_progress {
+  color: #0984e3;
+  border-color: #74b9ff;
+}
+.todo-item__action-btn--in_progress:hover {
+  background: #eaf4ff;
+}
+
+.todo-item__action-btn--completed {
+  color: #00b894;
+  border-color: #00b894;
+}
+.todo-item__action-btn--completed:hover {
+  background: #e0fff7;
+}
+
+.todo-item__action-btn--delete {
+  color: #d63031;
+  border-color: transparent;
+  font-size: 0.8rem;
+}
+.todo-item__action-btn--delete:hover {
+  background: #fff0f0;
+  border-color: #d63031;
+}
+
+/* ---- Selected state (keyboard navigation) ---- */
+
+.todo-item--selected {
+  outline: 2px solid #1a2744;
+  outline-offset: -2px;
+  background: rgba(26, 39, 68, 0.06);
+}
+
+.app--dark .todo-item--selected {
+  outline-color: #74b9ff;
+  background: rgba(116, 185, 255, 0.08);
+}
+
+/* ---- Error state (shake + red flash on A/D boundary) ---- */
+
+.todo-item--error {
+  animation: shake 0.4s ease-in-out;
+  outline: 2px solid #d63031;
+  outline-offset: -2px;
+}
+
+/* dark mode button colours */
+.app--dark .todo-item__action-btn--todo:hover { background: rgba(255,255,255,0.1); }
+.app--dark .todo-item__action-btn--in_progress:hover { background: rgba(116,185,255,0.12); }
+.app--dark .todo-item__action-btn--completed:hover { background: rgba(0,184,148,0.12); }
+.app--dark .todo-item__action-btn--delete:hover { background: rgba(214,48,49,0.12); }

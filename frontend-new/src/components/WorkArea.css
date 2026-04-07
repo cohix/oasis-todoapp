@@ -1,0 +1,96 @@
+/* ---- Work area container ---- */
+
+.work-area {
+  padding: 24px;
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ---- New-todo input ---- */
+
+.work-area__new-todo {
+  margin-bottom: 20px;
+}
+
+.work-area__new-todo-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 2px solid #dfe6e9;
+  font-size: 0.95rem;
+  background: #fff;
+  color: #0d0d0d;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.work-area__new-todo-input:focus {
+  border-color: #1a2744;
+}
+
+.app--dark .work-area__new-todo-input {
+  background: #1e272e;
+  color: #ffffff;
+  border-color: #2d3436;
+}
+
+.app--dark .work-area__new-todo-input:focus {
+  border-color: #74b9ff;
+}
+
+/* ---- Ungrouped todos section ---- */
+
+.work-area__ungrouped {
+  margin-top: 8px;
+}
+
+/* ---- Empty state ---- */
+
+.work-area__empty {
+  text-align: center;
+  opacity: 0.45;
+  font-size: 0.9rem;
+  margin-top: 32px;
+}
+
+/* ---- Ungroup drop zone ---- */
+
+.work-area__ungroup-zone {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px dashed #b2bec3;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #636e72;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.work-area__ungroup-zone--active {
+  border-color: #d63031;
+  background: rgba(214, 48, 49, 0.07);
+  color: #d63031;
+}
+
+/* ---- Shaking todo list (keyboard navigation boundary) ---- */
+
+.work-area__todos--shaking {
+  animation: shake 0.4s ease-in-out;
+}
+
+/* ---- Highlighted new-todo input (T key) ---- */
+
+.work-area__new-todo-input--active {
+  border-color: #0984e3 !important;
+  box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.25);
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 600px) {
+  .work-area {
+    padding: 14px;
+  }
+}

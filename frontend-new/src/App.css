@@ -1,0 +1,131 @@
+/* ----------------------------------------------------------------
+   Color palette
+   --navy:    #1a2744
+   --black:   #0d0d0d
+   --white:   #ffffff
+   --gunmetal:#2d3436
+   ---------------------------------------------------------------- */
+
+/* Reset & base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ---- App shell ---- */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Light mode (default) */
+.app--light {
+  background-color: #ffffff;
+  color: #0d0d0d;
+}
+
+/* Dark mode */
+.app--dark {
+  background-color: #0d0d0d;
+  color: #ffffff;
+}
+
+/* ---- Top bar ---- */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  height: 56px;
+  background-color: #1a2744; /* navy */
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.topbar__name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.topbar__tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  overflow-x: auto;
+}
+
+.topbar__tabs-placeholder {
+  font-size: 0.875rem;
+  opacity: 0.6;
+}
+
+.topbar__theme-toggle {
+  margin-left: auto;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.topbar__theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ---- Main content ---- */
+.main-content {
+  flex: 1;
+  padding: 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-content__placeholder {
+  font-size: 1rem;
+  opacity: 0.5;
+}
+
+.main-content__error {
+  font-size: 1rem;
+  color: #c0392b;
+}
+
+/* ---- Shake animation (used by TabBar, WorkArea list, and TodoItem) ---- */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%  { transform: translateX(-6px); }
+  30%  { transform: translateX(6px); }
+  45%  { transform: translateX(-4px); }
+  60%  { transform: translateX(4px); }
+  75%  { transform: translateX(-2px); }
+  90%  { transform: translateX(2px); }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  .topbar {
+    padding: 0 1rem;
+    height: 48px;
+  }
+
+  .topbar__name {
+    font-size: 1rem;
+  }
+}

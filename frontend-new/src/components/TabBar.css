@@ -1,0 +1,215 @@
+/* ----------------------------------------------------------------
+   TabBar — browser-style tab strip
+   ---------------------------------------------------------------- */
+
+.tabbar {
+  display: flex;
+  align-items: flex-end;
+  flex: 1;
+  overflow-x: auto;
+  gap: 2px;
+  padding: 0 4px;
+  /* Hide scrollbar but keep scrollability */
+  scrollbar-width: none;
+}
+.tabbar::-webkit-scrollbar { display: none; }
+
+/* ---- Individual tab ---- */
+
+.tabbar__tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1 1 0;
+  min-width: 80px;
+  max-width: 200px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  transition: background 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tabbar__tab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.tabbar__tab--active {
+  background: #ffffff;
+  color: #1a2744;
+  font-weight: 600;
+}
+
+.app--dark .tabbar__tab--active {
+  background: #2d3436;
+  color: #ffffff;
+}
+
+.tabbar__tab--dragging {
+  opacity: 0.4;
+}
+
+.tabbar__tab--dragover {
+  outline: 2px dashed rgba(255, 255, 255, 0.6);
+  outline-offset: -2px;
+}
+
+.tabbar__tab--creating {
+  background: rgba(255, 255, 255, 0.2);
+  flex: 1 1 160px;
+  max-width: 240px;
+}
+
+/* ---- Tab label ---- */
+
+.tabbar__tab-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+}
+
+/* ---- Inline rename / create input ---- */
+
+.tabbar__tab-input-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabbar__tab-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+  color: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  padding: 2px 0;
+}
+
+.tabbar__tab--active .tabbar__tab-input {
+  border-bottom-color: #1a2744;
+  color: #1a2744;
+}
+
+.tabbar__input-error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #c0392b;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* ---- '...' menu button ---- */
+
+.tabbar__menu-wrap {
+  position: relative;
+  flex-shrink: 0;
+  /* Hidden by default; shown on tab hover */
+  display: none;
+}
+
+.tabbar__tab:hover .tabbar__menu-wrap,
+.tabbar__tab--active .tabbar__menu-wrap {
+  display: block;
+}
+
+.tabbar__menu-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 2px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+}
+
+.tabbar__menu-btn:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* ---- Dropdown ---- */
+
+.tabbar__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  background: #ffffff;
+  color: #0d0d0d;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  list-style: none;
+  min-width: 120px;
+  z-index: 100;
+  padding: 4px 0;
+}
+
+.tabbar__dropdown-item {
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.tabbar__dropdown-item:hover {
+  background: #f0f0f0;
+}
+
+/* ---- Add (+) button ---- */
+
+.tabbar__add-btn {
+  flex-shrink: 0;
+  align-self: center;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 0 8px;
+  border-radius: 4px;
+  transition: background 0.15s;
+  margin-left: 4px;
+}
+
+.tabbar__add-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.tabbar__add-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ---- Shaking tab bar (keyboard navigation boundary) ---- */
+
+.tabbar--shaking {
+  animation: shake 0.4s ease-in-out;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 600px) {
+  .tabbar__tab {
+    min-width: 60px;
+    max-width: 140px;
+    padding: 0 8px;
+  }
+}
