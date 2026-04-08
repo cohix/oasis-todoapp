@@ -1,8 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
- * E2E tests run against the Docker-compose stack.
- * Start the stack first with `make up` (or `docker compose up -d --build`).
+ * E2E tests run against the monolithic Docker container.
+ * Start the container first with `make up` (or `make e2e` to run fully automated).
  */
 export default defineConfig({
   testDir: './tests',
@@ -14,8 +14,8 @@ export default defineConfig({
   expect: { timeout: 5_000 },
 
   use: {
-    // Frontend served by nginx inside the Docker stack
-    baseURL: 'http://localhost:3000',
+    // App served by nginx on port 80 inside the monolithic container
+    baseURL: 'http://localhost:80',
     trace: 'on-first-retry',
   },
 

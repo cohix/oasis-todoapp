@@ -1,33 +1,52 @@
-.PHONY: all up test e2e
+IMAGE := todoapp
 
-## all: build all components as local Docker images
-all:
-	docker compose build
+.PHONY: all docker up test e2e
 
-## up: build Docker images if source has changed, then start the app (frontend :3000, backend :8080)
+## docker: build the monolithic Docker image
+docker:
+	docker build -t $(IMAGE) .
+
+## up: run the container on port 3000 (Ctrl-C to stop)
 up:
-	docker compose up --build
+	docker run --rm \
+	    -p 3000:80 \
+	    -v "$(HOME)/.todoapp:/root/.todoapp" \
+	    --name $(IMAGE) \
+	    $(IMAGE)
 
-## test: build latest Docker images, run all unit/integration tests, then run E2E tests
-test:
-	docker compose build
+# upd: run the image in the background on 3000
+upd:
+	docker run -d --rm \
+	    -p 3000:80 \
+	    -v "$(HOME)/.todoapp:/root/.todoapp" \
+	    --name oasis-todoapp \
+	    $(IMAGE)
+
+## test: build image, run unit/integration tests, then run E2E tests against the container
+test: docker
 	cd backend && cargo test
 	cd frontend && npm test -- --watchAll=false
 	cd e2e && npm install
 	cd e2e && npx playwright install chromium
-	docker compose up -d
+	docker run -d --rm \
+	    -p 80:80 \
+	    -v "$(HOME)/.todoapp:/root/.todoapp" \
+	    --name $(IMAGE) \
+	    $(IMAGE)
 	@echo "Waiting for services to be ready..."
-	@until curl -sf http://localhost:8080/api/v1/health > /dev/null; do sleep 1; done
-	@until curl -sf http://localhost:3000 > /dev/null; do sleep 1; done
-	cd e2e && npm test; STATUS=$$?; docker compose down; exit $$STATUS
+	@until curl -sf http://localhost/api/v1/health > /dev/null; do sleep 1; done
+	cd e2e && npm test; STATUS=$$?; docker stop $(IMAGE); exit $$STATUS
 
-## e2e: install playwright (first run only), start the stack, run E2E tests, then stop
-##      Requires Docker. The stack is started in detached mode, tests run, then it is torn down.
+## e2e: build image, start container, run E2E tests, stop container
 e2e:
 	cd e2e && npm install
 	cd e2e && npx playwright install chromium
-	docker compose up -d --build
+	docker build -t $(IMAGE) .
+	docker run -d --rm \
+	    -p 80:80 \
+	    -v "$(HOME)/.todoapp:/root/.todoapp" \
+	    --name $(IMAGE) \
+	    $(IMAGE)
 	@echo "Waiting for services to be ready..."
-	@until curl -sf http://localhost:8080/api/v1/health > /dev/null; do sleep 1; done
-	@until curl -sf http://localhost:3000 > /dev/null; do sleep 1; done
-	cd e2e && npm test; STATUS=$$?; docker compose down; exit $$STATUS
+	@until curl -sf http://localhost/api/v1/health > /dev/null; do sleep 1; done
+	cd e2e && npm test; STATUS=$$?; docker stop $(IMAGE); exit $$STATUS
